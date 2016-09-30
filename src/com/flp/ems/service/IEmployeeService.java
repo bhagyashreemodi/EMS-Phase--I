@@ -7,10 +7,13 @@ import java.util.HashMap;
 public interface IEmployeeService {
 
 	void addEmployee(HashMap<String, String> employee) throws ParseException;
-	void modifyEmployee();
-	void removeEmployee();
+	boolean modifyEmployee(HashMap<String, String> modifyEmp);
+	boolean removeEmployee(HashMap<String, String> remEmployeeMap);
 	ArrayList<HashMap<String, String>> searchEmployee(HashMap<String, String> searchEmp);
 	ArrayList<HashMap<String, String>> getAllEmployee();
+	
+	
+	
 	
 	
 	

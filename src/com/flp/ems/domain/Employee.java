@@ -2,7 +2,7 @@ package com.flp.ems.domain;
 
 import java.util.Date;
 
-public class Employee {
+public class Employee implements Cloneable{
 
 //	private static long employeeId;
 	private long phoneNumber;
@@ -118,5 +118,10 @@ public class Employee {
 	public void setRoleId(long roleId) {
 		this.roleId = roleId;
 	}
-		
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+			
+			return super.clone();
+		}
 }

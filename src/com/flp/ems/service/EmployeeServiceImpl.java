@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import com.flp.ems.dao.EmployeeDaoImplForList;
 import com.flp.ems.domain.Employee;
@@ -37,15 +38,53 @@ public class EmployeeServiceImpl implements IEmployeeService{
 	
 
 	@Override
-	public void modifyEmployee() {
+	public boolean modifyEmployee(HashMap<String, String> modifyEmp) {
 		
-		
+		ArrayList<Employee> employees = this.employees.getAllEmployee();
+		Employee modifyEmployee = this.employees.getEmpForModification(modifyEmp.get("kinId"));
+		if(modifyEmployee == null){
+			return false;
+		}
+		if(modifyEmp.containsKey("phoneNumber")){
+			modifyEmployee.setPhoneNumber(Long.parseLong(modifyEmp.get("phoneNumber")));
+		}
+		if(modifyEmp.containsKey("address")){
+			modifyEmployee.setAddres(modifyEmp.get("address"));
+		}
+		return this.employees.modifyEmployee(modifyEmployee);
 	}
 
 	@Override
-	public void removeEmployee() {
+	public boolean removeEmployee(HashMap<String, String> remEmployeeMap) {
 		
-		
+		Employee employee = new Employee();
+		employee.setName(remEmployeeMap.get("name"));
+		employee.setKinId(remEmployeeMap.get("kinId"));
+		employee.setEmailId(remEmployeeMap.get("emailId"));
+		ArrayList<Employee> employeesArr = this.employees.searchEmployee(employee);
+		if(employeesArr == null){
+			System.out.println("No such employee found");
+		}
+		else{
+			System.out.println("Do u want to delete?\n1.yes\n2. no");
+			if(new Scanner(System.in).nextInt() == 1){
+				
+				for (Employee employee2 : employeesArr) {
+					boolean flag = this.employees.removeEmployee(employee2.getKinId());
+					if(flag == false){
+						return false;
+					}
+					else{
+						continue;
+					}
+				}
+			}
+			else{
+				return false;
+				
+			}
+		}
+		return true;
 	}
 
 	@Override

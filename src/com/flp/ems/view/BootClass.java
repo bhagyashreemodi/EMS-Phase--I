@@ -22,11 +22,11 @@ public class BootClass {
 				break;
 				
 			case 2:
-				UserInteraction.ModifyEmployee();
+				user.ModifyEmployee();
 				break;
 			
 			case 3:
-				UserInteraction.RemoveEmployee();
+				user.RemoveEmployee();
 				break;
 				
 			case 4:

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import com.flp.ems.service.EmployeeServiceImpl;
 import com.flp.ems.util.Validate;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 public class UserInteraction {
 
@@ -55,7 +56,7 @@ public class UserInteraction {
 		roleId = information.nextLine();
 		employee.put("name", name);
 		employee.put("kinId", kinId);
-		employee.put("emailId", emailId);
+		employee.put("emailId", emailId.toLowerCase());
 		employee.put("phoneNumber", phoneNumber);
 		employee.put("address", address);
 		employee.put("birthDate", birthDate);
@@ -73,13 +74,82 @@ public class UserInteraction {
 		}
 	}
 
-	public static void ModifyEmployee() {
+	public void ModifyEmployee() {
 		
-		System.out.println("Please provide the ");
+		getAllEmployee();
+		System.out.println("Please enter the Kin Id of the employee you want to modify :\nKin Id\n");
+		String kinId = new Scanner(System.in).nextLine();
+		System.out.println("Plese enter the field name that you want to modify address, phone number or exit:");
+		HashMap<String, String> modifyEmp = new HashMap<String, String>();
+		modifyEmp.put("kinId", kinId);
+		switch(new Scanner(System.in).nextLine().toLowerCase()){
+		
+		case "phone number" :
+			System.out.println("Please enter your phone number:");
+			modifyEmp.put("phoneNumber", new Scanner(System.in).nextLine());
+			
+			break;
+			
+		case "address" :
+			System.out.println("Please enter your new address:");
+			modifyEmp.put("address", new Scanner(System.in).nextLine());
+			break;
+		
+		default :
+			System.out.println("You can modify your phone number or address only");
+			ModifyEmployee();
+			break;
+		}
+		
+		if(employeeService.modifyEmployee(modifyEmp)){
+			System.out.println("Entry modified successfully");
+		}
+		else{
+			System.err.println("Something went wrong..Please try again");
+		}
+		
+		
+		
 	}
 
-	public static void RemoveEmployee() {
+	public void RemoveEmployee() {
+		getAllEmployee();
+		System.out.println("Please choose the criteria to delete the employee:\n1.Kin Id\n2.Email Id\n3.Name");
+		HashMap<String, String> remEmployeeMap = new HashMap<String, String>();
+		Scanner input = new Scanner(System.in);
+		switch(input.nextInt()){
 		
+		case 1: 
+			System.out.println("Please enter the kinId of the employee you want to remove:\nKin Id: ");
+			remEmployeeMap.put("kinId", new Scanner(System.in).nextLine());
+			
+			break;
+		case 2:
+			System.out.println("Please enter the Email Id of the employee you want to remove:\nEmail Id: ");
+			remEmployeeMap.put("emailId", new Scanner(System.in).nextLine());
+			break;
+			
+		case 3:
+			System.out.println("Please enter the name of the employee you want to remove:\nName : ");
+			remEmployeeMap.put("name", new Scanner(System.in).nextLine());
+			break;
+			
+		default :
+				System.out.println("Please enter a valid option");
+				RemoveEmployee();
+				break;
+			
+		
+		
+		}
+		
+		if(employeeService.removeEmployee(remEmployeeMap)){
+			System.out.println("removed successfully");
+		}
+		else{
+			System.err.println("Something went wrong..Please try again");
+		}
+			
 		
 	}
 
@@ -140,14 +210,18 @@ public class UserInteraction {
 			
 		}
 		else{
-			System.out.println(employeeMap.get(0).entrySet().toString());
+			for (HashMap<String, String> hashMap : employeeMap) {
+				System.out.println(hashMap.entrySet().toString());
+			}
 		}
 	}
 
 	public void getAllEmployee() {
 	
 		ArrayList<HashMap<String, String>> employeesList = employeeService.getAllEmployee();
-		System.out.println(employeesList.get(0).entrySet().toString());
+		for (HashMap<String, String> hashMap : employeesList) {
+			System.out.println(hashMap.entrySet().toString());
+		}
 		
 		
 		
