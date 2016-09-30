@@ -14,9 +14,14 @@ public class Validate {
 		if(dateOb.compareTo(new Date()) > 0){
 			throw new Exception("Enter valid date");
 		}
-			
+	}
+	public static void validatePhoneNumber(String phoneNumber){
+		
 		
 	}
-	
-	
+	public static void validateName(String name){
+		
+		
+		
+	}
 }
