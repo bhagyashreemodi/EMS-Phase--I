@@ -21,8 +21,20 @@ public class UserInteraction {
 		Scanner information = new Scanner(System.in);
 		System.out.println("Name:");
 		name = information.nextLine();
+		try {
+			Validate.validateName(name);
+		} catch (Exception e2) {
+			e2.printStackTrace();
+			addEmployee();
+		}
 		System.out.println("Phone Number:");
 		phoneNumber = information.nextLine();
+		try {
+			Validate.validatePhoneNumber(phoneNumber);
+		} catch (Exception e2) {
+			e2.printStackTrace();
+			addEmployee();
+		}
 		System.out.println("Address:");
 		address = information.nextLine();
 		System.out.println("Date of birth(dd/mm/yyyy):");

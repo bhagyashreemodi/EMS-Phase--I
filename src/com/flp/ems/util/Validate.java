@@ -15,13 +15,19 @@ public class Validate {
 			throw new Exception("Enter valid date");
 		}
 	}
-	public static void validatePhoneNumber(String phoneNumber){
+	public static void validatePhoneNumber(String phoneNumber) throws Exception{
 		
+		if(phoneNumber.length() != 10 || phoneNumber.matches("\\d+")){
+			throw new Exception("Please enter valid phone number");
+			
+		}
 		
 	}
-	public static void validateName(String name){
+	public static void validateName(String name) throws Exception{
 		
-		
+		if(name.matches(".+")){
+			throw new Exception("Please enter valid name");
+		}
 		
 	}
 }
